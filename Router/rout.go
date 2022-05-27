@@ -41,7 +41,8 @@ func Proxy(res http.ResponseWriter, req *http.Request) {
 	resp, err := http.Get(Url)
 	if err != nil {
 		fmt.Println(err)
-		return
+		res.WriteHeader(http.StatusServiceUnavailable)
+		res.Write([]byte(err.Error()))
 	}
 	respdata, _ := ioutil.ReadAll(resp.Body)
 	respstring := string(respdata)
